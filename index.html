@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Song input</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container mt-5 pt-3 pb-5 bg-dark">
+      <div class="row" id="append-elements">
+        <div class="col-12">
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label text-light"
+              >Artist Name</label
+            >
+            <input
+              type="text"
+              class="form-control anamein"
+              id="exampleFormControlInput1"
+              placeholder="michel"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label text-light"
+              >Song Name</label
+            >
+            <input
+              type="text"
+              class="form-control snamein"
+              id="exampleFormControlInput1"
+              placeholder="beat it"
+            />
+          </div>
+          <div class="mb-3">
+            <label
+              for="exampleFormControlTextarea1"
+              class="form-label text-light"
+              >lyrice</label
+            >
+            <textarea
+              class="form-control lyricein"
+              id="exampleFormControlTextarea1"
+              rows="3"
+            ></textarea>
+            <button
+              id="btn-sub"
+              type="button"
+              class="btn btn-sub btn-primary mt-3"
+            >
+              submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"
+  ></script>
+  <script>
+    const artistName = document.getElementsByClassName("anamein")[0];
+    const songName = document.getElementsByClassName("snamein")[0];
+    const lyrics = document.getElementsByClassName("lyricein")[0];
+    let lyriceValue;
+    const btn = document.getElementById("btn-sub");
+    const btn2 = document.getElementById("btn-show");
+    let counter = 0;
+    btn.addEventListener("click", () => {
+      lyriceValue = lyrics.value;
+      let wrapper1 = document.createElement("div");
+      wrapper1.className = "col-6 mt-4";
+      let wrapper2 = document.createElement("div");
+      wrapper2.className = "card";
+
+      let cardHeader = document.createElement("div");
+      cardHeader.className = "card-header artistname";
+      cardHeader.textContent = "Artist Name: " + artistName.value;
+
+      let cardBody = document.createElement("div");
+      cardBody.className = "card-body";
+
+      let songTitle = document.createElement("p");
+      songTitle.className = "card-title songtitle";
+      songTitle.textContent = "song Name: " + songName.value;
+
+      let modalWrapper = document.createElement("div");
+      modalWrapper.className = "modal fade";
+      modalWrapper.id = "exampleModal" + counter;
+      modalWrapper.setAttribute("tabindex", "-1");
+      modalWrapper.setAttribute("aria-labelledby", "exampleModalLabel");
+      modalWrapper.setAttribute("aria-hidden", "true");
+
+      let modalBody = document.createElement("div");
+      modalBody.className = "modal-dialog modal-dialog-centered";
+
+      let modalContent = document.createElement("div");
+      modalContent.className = "modal-content";
+
+      let modalHeader = document.createElement("div");
+      modalHeader.className = "modal-header";
+      let artistText = document.createTextNode(
+        "Artist Name: " + artistName.value
+      );
+      modalHeader.appendChild(artistText);
+
+      let lineBreak = document.createElement("br");
+      modalHeader.appendChild(lineBreak);
+
+      let songText = document.createTextNode("Song Name: " + songName.value);
+      modalHeader.appendChild(songText);
+
+      let closeBtn = document.createElement("button");
+      closeBtn.className = "btn-close";
+      closeBtn.setAttribute("data-bs-dismiss", "modal");
+      closeBtn.setAttribute("aria-label", "Close");
+
+      let modalIn = document.createElement("div");
+      modalIn.className = "modal-body";
+      modalIn.textContent = lyriceValue;
+
+      modalHeader.appendChild(closeBtn);
+      modalContent.appendChild(modalHeader);
+      modalContent.appendChild(modalIn);
+      modalBody.appendChild(modalContent);
+      modalWrapper.appendChild(modalBody);
+      cardBody.appendChild(modalWrapper);
+
+      let showBtn = document.createElement("a");
+      showBtn.className = "btn btn-primary";
+      showBtn.textContent = "show lyrice";
+      showBtn.setAttribute("data-bs-toggle", "modal");
+      showBtn.setAttribute("data-bs-target", "#exampleModal" + counter);
+      showBtn.addEventListener("click", () => {});
+
+      cardBody.appendChild(songTitle);
+      cardBody.appendChild(showBtn);
+      cardHeader.appendChild(cardBody);
+      wrapper2.appendChild(cardHeader);
+      wrapper1.appendChild(wrapper2);
+      document.getElementById("append-elements").appendChild(wrapper1);
+
+      document.getElementsByClassName("anamein")[0].value = "";
+      document.getElementsByClassName("lyricein")[0].value = "";
+      document.getElementsByClassName("snamein")[0].value = "";
+
+      counter++;
+    });
+  </script>
+</html>
